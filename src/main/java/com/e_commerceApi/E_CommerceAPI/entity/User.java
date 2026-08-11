@@ -36,7 +36,7 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE,
-    } )
+    }  , orphanRemoval = true)
     private Cart cart;
 
     @OneToMany(mappedBy = "user" ,  cascade = {

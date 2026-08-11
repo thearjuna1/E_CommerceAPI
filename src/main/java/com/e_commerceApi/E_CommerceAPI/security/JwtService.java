@@ -1,5 +1,6 @@
 package com.e_commerceApi.E_CommerceAPI.security;
 
+import com.e_commerceApi.E_CommerceAPI.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -22,10 +23,13 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(UserDetails userDetails) {
+
+    public String generateToken(User userDetails) {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date())
+                .claim("role", userDetails.getAuthorities())
+                .claim("userId", userDetails.getId())
                 .expiration(new Date(System.currentTimeMillis() + 60 *1000 * 60))
                 .signWith(getSecretKey())
                 .compact();

@@ -3,6 +3,7 @@ package com.e_commerceApi.E_CommerceAPI.security;
 import com.e_commerceApi.E_CommerceAPI.dto.AuthenticationResponse;
 import com.e_commerceApi.E_CommerceAPI.dto.LoginRequest;
 import com.e_commerceApi.E_CommerceAPI.dto.RegisterRequest;
+import com.e_commerceApi.E_CommerceAPI.entity.Cart;
 import com.e_commerceApi.E_CommerceAPI.entity.RefreshToken;
 import com.e_commerceApi.E_CommerceAPI.entity.User;
 import com.e_commerceApi.E_CommerceAPI.enums.Role;
@@ -50,8 +51,16 @@ public class AuthService {
         user.setEmail(register.getEmail());
         user.setRole(Role.CUSTOMER);
         user.setPassword(passwordEncoder.encode(register.getPassword()));
+        Cart cart = new Cart();
+        user.setCart(cart);
         userRepository.save(user);
         return "User registered successfully. Please login!";
+    }
+
+
+    public JwtPrincipal getCurrentPrincipal(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (JwtPrincipal) authentication.getPrincipal();
     }
 
 

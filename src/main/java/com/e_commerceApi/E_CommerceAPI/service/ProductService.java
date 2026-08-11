@@ -120,8 +120,5 @@ public class ProductService {
                 .map( product ->  new ProductResponse(product.getId(), product.getName(),
                         product.getDescription(), product.getPrice() , product.getStockQuantity() ,
                         product.getCategory().getId(), product.getCategory().getName())).toList();
-
-
-
     }
 }
